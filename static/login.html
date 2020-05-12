@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:500,500i,700,700i&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="/assets/loginstyles.css">
+
+        <title>Login</title>
+    </head>
+    
+    <body>
+        <div id="loginform">
+            <form id="login_form" method="get" action="home.html" role="form">
+                <div class="form_group">
+                    <input id="form_username" type="text" name="form_username" class="form_control" placeholder="Username">
+                </div>
+                <div class="form_group">
+                    <input id="form_password" type="password" name="form_password" class="form_control" placeholder="Password">
+                </div>
+                    <input type="button" class="btn" value="Login" onClick="validUserAndPass(this.form)">
+                <div class="error_message">
+                    <p>Your Username or Password was Incorrect. <br />Please try again.</p>
+                </div>
+            </form>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="/assets/scripts.js"></script>
+
+    </body>
+</html>

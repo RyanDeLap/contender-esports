@@ -1,0 +1,99 @@
+/* 
+    Colors:
+        Light Red: #D1212A
+        Dark Red: #280000
+        Medium Red: #610008
+        Light Gray: #CCCCCC
+        Medium Gray: #6D6E71
+        Dark Gray: #424242
+*/
+
+body {
+    background: url(images/background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+::placeholder { 
+    color: #CCCCCC;
+    opacity: 1; 
+    font-family: Raleway;
+    font-size: 36px;
+}
+
+:-ms-input-placeholder { 
+    color: #CCCCCC;
+    font-family: Raleway;
+    font-size: 36px;
+}
+  
+::-ms-input-placeholder { 
+    color: #CCCCCC;
+    font-family: Raleway;
+    font-size: 36px;
+}
+
+.form_group {
+    margin: auto;
+    text-align: center;
+}
+
+.form_control {
+    border: none;
+    border-bottom: solid 2px #424242;
+    width: 80%;
+    height: 50px;
+    margin-top: 100px;
+    padding: 0;
+    font-family: Raleway;
+    font-size: 36px;
+}
+
+.error_message {
+    background-color: #D1212A;
+    height: 50px;
+    width: 69%;
+    padding: 50px 30px;
+    padding-top: 20px;
+    padding-bottom: 75px;
+    margin: auto;
+    margin-top: -22px;
+    margin-bottom: 50px;
+    border: none;
+    font-family: Raleway;
+    color: white;
+    font-size: 25px;
+    line-height: 40px;
+    visibility: hidden;
+}
+.btn {
+    position: absolute;
+    left: 50%;
+    top: 83%;
+    transform: translate(-50%, -50%);
+    border: none;
+    padding: 15px 30px;
+    font-size: 30px;
+    font-family: Raleway;
+    background-color: #424242;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #280000;
+}
+
+#loginform {
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 60vh;
+    width: 80vh;
+    border-radius: 20px;
+    padding: 0;
+}
+
