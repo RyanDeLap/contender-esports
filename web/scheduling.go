@@ -3,20 +3,20 @@ package web
 import (
 	"contender/discord"
 	"fmt"
-	"github.com/bwmarrin/discordgo"
-	"github.com/dlion/goImgur"
 	"log"
 	"os"
 	"os/exec"
 	"strconv"
 	"time"
+
+	"github.com/bwmarrin/discordgo"
+	"github.com/carlescere/scheduler"
+	"github.com/dlion/goImgur"
 )
 
-func setupScheduler() {
+var scheduledJobs []*scheduler.Job
 
-	//if s1 != nil {
-	//
-	//}
+func setupScheduler() {
 
 	log.Println("Reloading scheduler...")
 
@@ -29,28 +29,48 @@ func setupScheduler() {
 		fmt.Println("Registering event for: " + schedule.TimeToPost)
 		switch schedule.DayOfWeek {
 		case "monday":
-			s1.Every(1).Monday().At(schedule.TimeToPost).Do(runDistrubition, schedule)
+			job, _ := scheduler.Every(1).Monday().At(schedule.TimeToPost).Run(func() {
+				runDistrubition(schedule)
+			})
+			scheduledJobs = append(scheduledJobs, job)
 		case "tuesday":
-			s1.Every(1).Tuesday().At(schedule.TimeToPost).Do(runDistrubition, schedule)
+			job, _ := scheduler.Every(1).Tuesday().At(schedule.TimeToPost).Run(func() {
+				runDistrubition(schedule)
+			})
+			scheduledJobs = append(scheduledJobs, job)
 		case "wednesday":
-			s1.Every(1).Wednesday().At(schedule.TimeToPost).Do(runDistrubition, schedule)
+			job, _ := scheduler.Every(1).Wednesday().At(schedule.TimeToPost).Run(func() {
+				runDistrubition(schedule)
+			})
+			scheduledJobs = append(scheduledJobs, job)
 		case "thursday":
-			s1.Every(1).Thursday().At(schedule.TimeToPost).Do(runDistrubition, schedule)
+			job, _ := scheduler.Every(1).Thursday().At(schedule.TimeToPost).Run(func() {
+				runDistrubition(schedule)
+			})
+			scheduledJobs = append(scheduledJobs, job)
 		case "friday":
-			s1.Every(1).Friday().At(schedule.TimeToPost).Do(runDistrubition, schedule)
+			job, _ := scheduler.Every(1).Friday().At(schedule.TimeToPost).Run(func() {
+				runDistrubition(schedule)
+			})
+			scheduledJobs = append(scheduledJobs, job)
 		case "saturday":
-			s1.Every(1).Saturday().At(schedule.TimeToPost).Do(runDistrubition, schedule)
+			job, _ := scheduler.Every(1).Saturday().At(schedule.TimeToPost).Run(func() {
+				runDistrubition(schedule)
+			})
+			scheduledJobs = append(scheduledJobs, job)
 		case "sunday":
-			s1.Every(1).Sunday().At(schedule.TimeToPost).Do(runDistrubition, schedule)
+			job, _ := scheduler.Every(1).Sunday().At(schedule.TimeToPost).Run(func() {
+				runDistrubition(schedule)
+			})
+			scheduledJobs = append(scheduledJobs, job)
 		}
 	}
+}
 
-	for _, job := range(s1.Jobs()) {
-		fmt.Println(job.Weekday())
-		fmt.Println(job)
+func clearScheduler() {
+	for _, val := range scheduledJobs {
+		val.Quit <- true
 	}
-
-	fmt.Println(len(s1.Jobs()))
 }
 
 func runDistrubition(info ScheduleInfo) {
@@ -108,14 +128,14 @@ func runDistrubition(info ScheduleInfo) {
 	err = postToFacebook(center, Post{
 		Message:        content,
 		AttachmentType: PhotoAttachment,
-		Attachment: imgurLink,
+		Attachment:     imgurLink,
 	})
 	if err != nil {
 		log.Println("Failed to post to facebook:", err)
 	}
 
 	//Face to twitter
-	err  = sendTwitterTweeterTweet(center, content, filename)
+	err = sendTwitterTweeterTweet(center, content, filename)
 	if err != nil {
 		log.Println("Failed to post to twitter:", err)
 	}

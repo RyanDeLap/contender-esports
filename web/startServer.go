@@ -6,20 +6,19 @@ import (
 	"encoding/gob"
 	"encoding/json"
 	"fmt"
-	"github.com/go-co-op/gocron"
-	_ "github.com/go-co-op/gocron"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
-	"github.com/tdewolff/minify"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
 	"github.com/dghubble/oauth1"
 	"github.com/dghubble/oauth1/twitter"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
+	"github.com/tdewolff/minify"
 )
 
 type PanelConfig struct {
@@ -34,7 +33,6 @@ var mysqlConn *sql.DB
 var HtmlTemplate *template.Template
 var DEBUG = true
 var DiscordChannel chan discord.ChannelMessageInfo = make(chan discord.ChannelMessageInfo)
-var s1 *gocron.Scheduler
 var oauthConfig oauth1.Config
 
 func Start() {
@@ -63,10 +61,6 @@ func Start() {
 	}
 
 	fmt.Println("Loading schedulers")
-
-	s1 = gocron.NewScheduler(time.UTC)
-	//setupScheduler()
-	s1.StartAsync()
 
 	gob.Register(StuffToSave{})
 

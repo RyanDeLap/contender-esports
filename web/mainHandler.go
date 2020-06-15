@@ -3,10 +3,11 @@ package web
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
 //func SendDiscordMessage(w http.ResponseWriter, r *http.Request) {
@@ -37,7 +38,7 @@ func CreateCenterHandler(w http.ResponseWriter, r *http.Request) {
 		CenterName string `json:"centerName"`
 		GuildID    string `json:"guildID"`
 		ChannelID  string `json:"channelID"`
-		GGLink  string `json:"gglink"`
+		GGLink     string `json:"gglink"`
 	}
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&data); err != nil {
@@ -67,7 +68,7 @@ func UpdateCenterHandler(w http.ResponseWriter, r *http.Request) {
 		CenterName string `json:"centerName"`
 		GuildID    string `json:"discordChannelID"`
 		ChannelID  string `json:"discordGuildID"`
-		GGLink  string `json:"ggLeapLink"`
+		GGLink     string `json:"ggLeapLink"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -129,9 +130,9 @@ func InsertScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s1.Clear()
+	clearScheduler()
 	time.Sleep(1 * time.Second)
-	//setupScheduler() //Reload scheduler config.
+	setupScheduler() //Reload scheduler config.
 
 	RespondWithError(w, http.StatusOK, "")
 	return
@@ -165,9 +166,9 @@ func UpdateScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s1.Clear()
+	clearScheduler()
 	time.Sleep(1 * time.Second)
-	//setupScheduler() //Reload scheduler config.
+	setupScheduler() //Reload scheduler config.
 
 	RespondWithError(w, http.StatusOK, "")
 	return
@@ -217,9 +218,10 @@ func SaveSchedulesHandler(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 
-	RespondWithError(w, http.StatusOK, "")
-	s1.Clear()
+	clearScheduler()
 	time.Sleep(1 * time.Second)
-	//setupScheduler() //Reload scheduler config.
+	setupScheduler() //Reload scheduler config.
+
+	RespondWithError(w, http.StatusOK, "")
 	return
 }
